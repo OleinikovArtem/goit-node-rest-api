@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import gravatar from "gravatar";
 import User from "../models/User.js";
 import HttpError from "../helpers/HttpError.js";
 
@@ -12,10 +13,13 @@ const register = async (email, password) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  const avatarURL = gravatar.url(email, { s: "200", r: "pg", d: "identicon" });
+  
   const user = await User.create({
     email,
     password: hashedPassword,
     subscription: "starter",
+    avatarURL,
   });
 
   return {
@@ -81,11 +85,24 @@ const updateSubscription = async (userId, subscription) => {
   };
 };
 
+const updateAvatar = async (userId, avatarPath) => {
+  const user = await User.findByPk(userId);
+  if (!user) {
+    throw HttpError(401, "Not authorized");
+  }
+
+  await user.update({ avatarURL: avatarPath });
+  return {
+    avatarURL: avatarPath,
+  };
+};
+
 export default {
   register,
   login,
   logout,
   getCurrent,
   updateSubscription,
+  updateAvatar,
 };
 

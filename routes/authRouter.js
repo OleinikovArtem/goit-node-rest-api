@@ -5,6 +5,7 @@ import {
   logout,
   getCurrent,
   updateSubscription,
+  updateAvatar,
 } from "../controllers/authControllers.js";
 import validateBody from "../helpers/validateBody.js";
 import {
@@ -13,6 +14,7 @@ import {
   updateSubscriptionSchema,
 } from "../schemas/authSchemas.js";
 import authenticate from "../middlewares/authenticate.js";
+import upload from "../middlewares/upload.js";
 
 const authRouter = express.Router();
 
@@ -26,6 +28,7 @@ authRouter.patch(
   validateBody(updateSubscriptionSchema),
   updateSubscription
 );
+authRouter.patch("/avatars", authenticate, upload, updateAvatar);
 
 export default authRouter;
 
