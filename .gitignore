@@ -3,3 +3,7 @@ node_modules/
 .idea
 .vscode
 .DS_Store
+*.sqlite
+*.sqlite3
+db/*.sqlite
+db/*.sqlite3
