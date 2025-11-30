@@ -71,11 +71,25 @@ const updateContact = async (contactId, userId, data) => {
   return contact;
 };
 
+const updateStatusContact = async (contactId, userId, data) => {
+  const contact = await Contact.findOne({
+    where: { id: contactId, owner: userId },
+  });
+
+  if (!contact) {
+    throw HttpError(404, "Not found");
+  }
+
+  await contact.update(data);
+  return contact;
+};
+
 export default {
   getAllContacts,
   getOneContact,
   deleteContact,
   createContact,
   updateContact,
+  updateStatusContact,
 };
 

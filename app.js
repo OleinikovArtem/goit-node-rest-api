@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -28,7 +29,7 @@ const startServer = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: false });
-    console.log("Database connection established successfully.");
+    console.log("Database connection successful");
 
     app.listen(3000, () => {
       console.log("Server is running. Use our API on port: 3000");
