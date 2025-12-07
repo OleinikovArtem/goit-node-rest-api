@@ -88,3 +88,23 @@ export const updateAvatar = async (req, res, next) => {
   }
 };
 
+export const verifyEmail = async (req, res, next) => {
+  try {
+    const { verificationToken } = req.params;
+    await authService.verifyEmail(verificationToken);
+    res.status(200).json({ message: "Verification successful" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resendVerificationEmail = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    await authService.resendVerificationEmail(email);
+    res.status(200).json({ message: "Verification email sent" });
+  } catch (error) {
+    next(error);
+  }
+};
+
