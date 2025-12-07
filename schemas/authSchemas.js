@@ -14,3 +14,10 @@ export const updateSubscriptionSchema = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required(),
 });
 
+export const resendVerificationSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    "any.required": "missing required field email",
+    "string.email": "missing required field email",
+  }),
+});
+
